@@ -1,4 +1,4 @@
-package com.pazhcc.contractbank
+package com.pazhcc.contractsbank
 
 import io.flutter.embedding.android.FlutterActivity
 

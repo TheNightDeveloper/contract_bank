@@ -1,38 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:contracts_bank/core/utils/category_enum.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:contract_bank/config/routes/routes.dart';
+import 'package:contracts_bank/config/routes/routes.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../provider/article_provider.dart';
 
 class _BuildCategoryGrid extends StatelessWidget {
   final BuildContext context;
-  _BuildCategoryGrid({
+  const _BuildCategoryGrid({
     required this.context,
   });
 
-  final List imageList = [
-    'assets/svg/Building permit-bro 1.svg',
-    'assets/svg/ISO Certification-bro(1) 1.svg',
-    'assets/svg/Business deal-bro 1.svg',
-    'assets/svg/Signing a contract-bro 1.svg',
-    'assets/svg/Documents-bro 1.svg',
-    'assets/svg/Car finance-bro 1.svg',
-    'assets/svg/Car finance-bro 1.svg',
-    'assets/svg/Car finance-bro 1.svg',
-    'assets/svg/Car finance-bro 1.svg',
-  ];
-  final List textList = [
-    'ساخت و ساز ',
-    'مشارکت و سرمایه گذاری',
-    'استخدام و منابع انسانی',
-    'محافظت از کسب و کار',
-    'پیمانکاری کسب و کار',
-    ' خرید و فروش',
-    'مالکیت',
-    'اجاره',
-    'سایر قرارداد ها',
-  ];
+  final categorys = Categorys.values;
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +21,12 @@ class _BuildCategoryGrid extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 15.w),
       sliver: SliverGrid(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, crossAxisSpacing: 15.w, mainAxisSpacing: 10.h),
+            crossAxisCount: 2, crossAxisSpacing: 11.w, mainAxisSpacing: 11.h),
         delegate: SliverChildBuilderDelegate(
             (context, index) => GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushNamed(AppRoutes.contractsPage,
-                        arguments: {
-                          'categoryName': textList[index],
-                          'imageName': imageList[index],
-                          'id': index + 1
-                        });
-                    // Provider.of<SkeletProvider>(context, listen: false)
-                    //     .changePage('page6');
+                        arguments: categorys[index]);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(5),
@@ -62,12 +37,13 @@ class _BuildCategoryGrid extends StatelessWidget {
                     child: Column(
                       children: [
                         SvgPicture.asset(
-                          imageList[index],
+                          categorys[index].imagePath,
                           height: 100.h,
                           width: 100.w,
                         ),
                         Text(
-                          textList[index],
+                          categorys[index].title,
+                          // textList[index],
                           softWrap: true,
                           textDirection: TextDirection.rtl,
                           overflow: TextOverflow.ellipsis,
@@ -88,6 +64,13 @@ class BuildCarouselSlider extends StatelessWidget {
   const BuildCarouselSlider({
     super.key,
   });
+  Future<void> _launchUrl(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,22 +79,17 @@ class BuildCarouselSlider extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: CarouselSlider(
           items: [
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10.h),
-              width: 350.w,
-              decoration: BoxDecoration(boxShadow: const [
-                BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 5,
-                    spreadRadius: 1,
-                    offset: Offset(0, 5))
-              ], borderRadius: BorderRadius.circular(16), color: Colors.red),
-              child: const Text('slider1'),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10.h),
-              width: 350.w,
-              decoration: BoxDecoration(
+            GestureDetector(
+              onTap: () {
+                _launchUrl(Uri.parse('https://pazhcc.com'));
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10.h),
+                width: 350.w,
+                decoration: BoxDecoration(
+                  image: const DecorationImage(
+                      image: AssetImage('assets/img/Slider-01-PazhApp-min.jpg'),
+                      fit: BoxFit.fill),
                   boxShadow: const [
                     BoxShadow(
                         color: Colors.grey,
@@ -120,24 +98,63 @@ class BuildCarouselSlider extends StatelessWidget {
                         offset: Offset(0, 5))
                   ],
                   borderRadius: BorderRadius.circular(16),
-                  color: Colors.blueAccent),
-              child: const Text('slider2'),
+                ),
+                // child: const Text('slider1'),
+              ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10.h),
-              width: 350.w,
-              decoration: BoxDecoration(boxShadow: const [
-                BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 5,
-                    spreadRadius: 1,
-                    offset: Offset(0, 5))
-              ], borderRadius: BorderRadius.circular(16), color: Colors.pink),
-              child: const Text('slider3'),
+            GestureDetector(
+              onTap: () {
+                _launchUrl(Uri.parse('https://pazhcc.com/regulation'));
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10.h),
+                width: 350.w,
+                decoration: BoxDecoration(
+                  image: const DecorationImage(
+                      image: AssetImage('assets/img/Slider-02-PazhApp-min.jpg'),
+                      fit: BoxFit.fill),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 5,
+                        spreadRadius: 1,
+                        offset: Offset(0, 5))
+                  ],
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                // child: const Text('slider1'),
+              ),
             ),
+            GestureDetector(
+              onTap: () {
+                _launchUrl(Uri.parse('https://instagram.com/pazhcc'));
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10.h),
+                width: 350.w,
+                decoration: BoxDecoration(
+                  image: const DecorationImage(
+                      image: AssetImage('assets/img/Slider-03-PazhApp-min.jpg'),
+                      fit: BoxFit.fill),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 5,
+                        spreadRadius: 1,
+                        offset: Offset(0, 5))
+                  ],
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                // child: const Text('slider1'),
+              ),
+            )
           ],
           options: CarouselOptions(
-              height: 185.h, enlargeCenterPage: true, enlargeFactor: 0.22),
+            height: 185.h,
+            enlargeCenterPage: true,
+            enlargeFactor: 0.22,
+            // autoPlay: true
+          ),
         ),
       ),
     );
@@ -173,3 +190,18 @@ class CategoryList extends StatelessWidget {
     );
   }
 }
+
+/* imageList.map((image) => Container(
+              margin: EdgeInsets.symmetric(vertical: 10.h),
+              width: 350.w,
+              decoration: BoxDecoration(
+                image: DecorationImage(image: AssetImage(image)),
+                boxShadow: const [
+                BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 5,
+                    spreadRadius: 1,
+                    offset: Offset(0, 5))
+              ], borderRadius: BorderRadius.circular(16), ),
+              // child: const Text('slider1'),
+            ),).toList() */

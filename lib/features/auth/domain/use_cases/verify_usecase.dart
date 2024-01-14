@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:contract_bank/features/auth/domain/entities/user_entity.dart';
+import 'package:contracts_bank/features/auth/domain/entities/user_entity.dart';
 
 import '../../../../core/errors/failure.dart';
 import '../repositories/auth_repository.dart';

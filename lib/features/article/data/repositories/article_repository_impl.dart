@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:contract_bank/core/errors/failure.dart';
-import 'package:contract_bank/core/services/data_state.dart';
-import 'package:contract_bank/features/article/data/data_source/remote_data/article_remote_data.dart';
-import 'package:contract_bank/features/article/data/models/article_model.dart';
-import 'package:contract_bank/features/article/domain/repositories/article_repository.dart';
+import 'package:contracts_bank/core/errors/failure.dart';
+import 'package:contracts_bank/core/services/data_state.dart';
+import 'package:contracts_bank/features/article/data/data_source/remote_data/article_remote_data.dart';
+import 'package:contracts_bank/features/article/data/models/article_model.dart';
+import 'package:contracts_bank/features/article/domain/repositories/article_repository.dart';
 
 class ArticleRepositoryImpl implements ArticleRepository {
   final ArticleRemoteData remoteData;

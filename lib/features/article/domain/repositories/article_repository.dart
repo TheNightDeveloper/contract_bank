@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:contract_bank/core/errors/failure.dart';
-import 'package:contract_bank/features/article/domain/entities/article_entity.dart';
+import 'package:contracts_bank/core/errors/failure.dart';
+import 'package:contracts_bank/features/article/domain/entities/article_entity.dart';
 
 import '../../../../core/services/data_state.dart';
 

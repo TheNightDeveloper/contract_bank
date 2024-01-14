@@ -1,4 +1,4 @@
-import 'package:contract_bank/core/services/data_state.dart';
+import 'package:contracts_bank/core/services/data_state.dart';
 
 import '../repositories/article_repository.dart';
 import 'article_usecase.dart';

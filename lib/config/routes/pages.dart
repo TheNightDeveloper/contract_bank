@@ -1,4 +1,4 @@
-import 'package:contract_bank/config/routes/routes.dart';
+import 'package:contracts_bank/config/routes/routes.dart';
 
 import '../../features/article/presentation/pages/home_page.dart';
 import '../../features/article/presentation/pages/subpage/contracts_page.dart';

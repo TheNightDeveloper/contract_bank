@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:contract_bank/core/widgets/common_widgets.dart';
+import 'package:contracts_bank/core/widgets/common_widgets.dart';
 import '../widgets/bookmark_widgets.dart';
 
 class BookmarkPage extends StatelessWidget {
@@ -10,7 +10,7 @@ class BookmarkPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CustomScrollView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: AlwaysScrollableScrollPhysics(),
       slivers: [
         BuildAppbar(),
         BuildImage(imageName: 'Bookmarks-pana 1'),

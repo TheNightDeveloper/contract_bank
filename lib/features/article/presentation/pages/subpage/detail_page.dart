@@ -1,11 +1,13 @@
+import 'package:contracts_bank/core/services/adivery_service.dart';
+import 'package:contracts_bank/features/article/presentation/provider/article_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:contract_bank/config/routes/routes.dart';
-import 'package:contract_bank/core/widgets/common_widgets.dart';
-import 'package:contract_bank/features/article/domain/entities/article_entity.dart';
-import 'package:contract_bank/features/article/presentation/widgets/detail_widgets.dart';
+import 'package:contracts_bank/config/routes/routes.dart';
+import 'package:contracts_bank/core/widgets/common_widgets.dart';
+import 'package:contracts_bank/features/article/domain/entities/article_entity.dart';
+import 'package:contracts_bank/features/article/presentation/widgets/detail_widgets.dart';
 
 class DetailPage extends StatelessWidget {
   final ArticleEntity? article;
@@ -20,12 +22,20 @@ class DetailPage extends StatelessWidget {
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
+      Fluttertoast.showToast(msg: 'لینگ فعال نمیباشد');
       throw 'could not launch $url';
     }
   }
 
+  bool isBookmark(ArticleEntity articleEntity, BuildContext context) {
+    return Provider.of<ArticleProvider>(context, listen: false)
+        .bookmarkArticle!
+        .contains(articleEntity);
+  }
+
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ArticleProvider>(context);
     final List<Widget> fabIcons = [
       IconButton(
           style: IconButton.styleFrom(
@@ -35,16 +45,40 @@ class DetailPage extends StatelessWidget {
             color: kPrimaryColor,
           ),
           onPressed: () async {
-            await saveToClipBoard(article!.content);
+            if (provider.copied == 0) {
+              await saveToClipBoard(article!.content);
+              print(provider.copied);
+              provider.copy(1);
+            } else {
+              print(provider.copied);
+              InterstitialAds.showInterstitial(onClose: (close) async {
+                await saveToClipBoard(article!.content);
+                provider.copy(0);
+              });
+              provider.copy(0);
+            }
           }),
       IconButton(
           style: IconButton.styleFrom(
               backgroundColor: kBackGroundColor.withOpacity(.6)),
-          icon: const Icon(
-            Icons.bookmark_add_outlined,
-            color: kPrimaryColor,
-          ),
-          onPressed: () {}),
+          icon: !provider.bookmarkArticle!.contains(article)
+              ? const Icon(
+                  Icons.bookmark_add_outlined,
+                  color: kPrimaryColor,
+                )
+              : const Icon(
+                  Icons.bookmark,
+                  color: kPrimaryColor,
+                ),
+          onPressed: () async {
+            bool articleIsBookmark = isBookmark(article!, context);
+            if (articleIsBookmark) {
+              var id = article!.id.toString();
+              await provider.deleteBookmark(id);
+            } else {
+              await provider.postBookmark(article!.id);
+            }
+          }),
       IconButton(
           style: IconButton.styleFrom(
               backgroundColor: kBackGroundColor.withOpacity(.6)),
@@ -54,9 +88,10 @@ class DetailPage extends StatelessWidget {
           ),
           onPressed: () {
             Uri url = Uri.parse(article!.url);
-            _launchUrl(url).catchError((onError) {
-              Fluttertoast.showToast(msg: "لینک مقاله فعال نمی باشد");
-            });
+            _launchUrl(url)
+                .whenComplete(() => InterstitialAds.showInterstitial());
+
+            // InterstitialAds.showInterstitial();
           }),
     ];
     return Scaffold(
@@ -70,12 +105,12 @@ class DetailPage extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Colors.transparent,
+                  Colors.white,
                   Colors.transparent,
                   Colors.transparent,
                   Colors.white
                 ],
-                stops: [0.0, 0.0, .95, 1],
+                stops: [0, 0.0, .95, 1],
               ).createShader(bounds);
             },
             blendMode: BlendMode.dstOut,
@@ -86,7 +121,8 @@ class DetailPage extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                     child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
                   child: Text(
                     article!.content,
                     style: kMediumTextStyle.copyWith(color: Colors.black87),

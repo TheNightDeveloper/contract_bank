@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:contract_bank/config/routes/pages.dart';
-import 'package:contract_bank/core/utils/const.dart';
+import 'package:contracts_bank/config/routes/pages.dart';
+import 'package:contracts_bank/core/utils/const.dart';
 
 Future<void> main() async {
   await init();

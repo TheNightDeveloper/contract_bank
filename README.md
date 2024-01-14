@@ -1,4 +1,4 @@
-# contract_bank
+# contracts_bank
 
 A Content right Flutter project.
 

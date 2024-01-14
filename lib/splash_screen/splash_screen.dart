@@ -1,10 +1,10 @@
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:contract_bank/config/routes/routes.dart';
-import 'package:contract_bank/core/params/user_params.dart';
-import 'package:contract_bank/features/article/presentation/provider/article_provider.dart';
-import 'package:contract_bank/features/auth/presentation/provider/auth_provider.dart';
+import 'package:contracts_bank/config/routes/routes.dart';
+import 'package:contracts_bank/core/params/auth_params.dart';
+import 'package:contracts_bank/features/article/presentation/provider/article_provider.dart';
+import 'package:contracts_bank/features/auth/presentation/provider/auth_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

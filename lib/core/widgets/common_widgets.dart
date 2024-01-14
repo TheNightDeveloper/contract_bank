@@ -1,6 +1,13 @@
+import 'package:adivery/adivery.dart';
+import 'package:contracts_bank/config/routes/routes.dart';
+import 'package:contracts_bank/core/services/adivery_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:math' as math;
 import '../utils/const.dart';
 
@@ -9,60 +16,216 @@ class BuildAppbar extends StatelessWidget {
     super.key,
   });
 
+  Future<void> _launchUrl(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'could not launch $url';
+    }
+  }
+
+  Future<void> donationDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) => Dialog(
+              elevation: 1,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              child: Container(
+                width: MediaQuery.of(context).size.width / 1.2,
+                height: MediaQuery.of(context).size.height / 3,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15.0),
+                    boxShadow: [
+                      BoxShadow(
+                          offset: const Offset(12, 26),
+                          blurRadius: 50,
+                          spreadRadius: 0,
+                          color: Colors.grey.withOpacity(.1)),
+                    ]),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/img/icons8-donate-64.png',
+                      height: 40.h,
+                      width: 40.w,
+                      color: kPrimaryColor,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text("حمایت از تیم توسعه اپلیکیشن",
+                        style: kMediumTextStyle.copyWith(
+                            fontSize: 20.sp, color: Colors.black87)),
+                    const SizedBox(
+                      height: 3.5,
+                    ),
+                    Text(
+                        "در صورت رضایت از اپلیکیشن میتوانید با مشاهده تبلیغات  و سپس با ثبت 5 امتیاز  از تیم توسعه اپلیکیشن حمایت کنید و مارا برای تولید محتوای جدید دلگرم کنید",
+                        textAlign: TextAlign.center,
+                        textDirection: TextDirection.rtl,
+                        style:
+                            kMediumTextStyle.copyWith(color: Colors.black54)),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          InterstitialAds.showInterstitial(onClose: (close) {
+                            _launchUrl(Uri.parse(
+                                    'bazaar://details?id=com.pazhcc.contractsbank'))
+                                .catchError((onError) {
+                              Fluttertoast.showToast(
+                                  msg: 'از نصب بودن کافه بازار مطمئن شوید!');
+                            });
+                          });
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: kPrimaryColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16))),
+                        child: Text(
+                          'حمایت',
+                          style: kMediumTextStyle,
+                        ))
+                  ],
+                ),
+              ),
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+      padding: EdgeInsets.fromLTRB(15.w, 10.h, 15.w, 10.h),
       sliver: SliverAppBar(
         automaticallyImplyLeading: false,
         pinned: true,
         // floating: true,
         backgroundColor: kPrimaryColor,
+        // forceElevated: true,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         leadingWidth: 100.w,
-        title: Text(
-          'مخزن قرارداد ها',
-          style: kMediumTextStyle.copyWith(
-              color: Colors.white,
-              fontSize: 18.sp,
-              fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        // leading: Padding(
-        //   padding: EdgeInsets.only(left: 10.w),
-        //   child: Row(
-        //     children: [
-        //       IconButton(
-        //           onPressed: () {},
-        //           icon: const Icon(
-        //             ContractBankIcons.light_icon,
-        //             color: Colors.white,
-        //           )),
-        //       IconButton(
-        //           onPressed: () {},
-        //           icon: const Icon(
-        //             ContractBankIcons.star_icon,
-        //             color: Colors.white,
-        //           )),
-        //     ],
-        //   ),
+        // title: Text(
+        //   'مخزن قرارداد ها',
+        //   style: kMediumTextStyle.copyWith(
+        //       color: Colors.white,
+        //       fontSize: 18.sp,
+        //       fontWeight: FontWeight.bold),
         // ),
-        // actions: [
-        //   Padding(
-        //     padding: EdgeInsets.symmetric(horizontal: 15.w),
-        //     child: Text(
-        //       'مخزن قرارداد ها',
-        //       style: kMediumTextStyle.copyWith(
-        //           color: Colors.white,
-        //           fontSize: 18.sp,
-        //           fontWeight: FontWeight.bold),
-        //     ),
-        //   )
-        // ],
+        centerTitle: true,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 8.w),
+          child: Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    donationDialog(context);
+                  },
+                  icon: Image.asset(
+                    'assets/img/icons8-donate-64(1).png',
+                    height: 19.h,
+                    width: 20.w,
+                  )),
+              IconButton(
+                  onPressed: () async {
+                    // showModalBottomSheet(
+                    //     useSafeArea: true,
+                    //     context: context,
+                    //     builder: (_) => const RatingBarBottomSheet());
+                    await Share.share(
+                        'https://cafebazaar.ir/app/com.pazhcc.contractsbank',
+                        subject:
+                            'جامع ترین و کامل ترین اپلیکیشن مخزن نمونه قراردادهای کاربردی');
+                  },
+                  icon: const Icon(
+                    Icons.share_rounded,
+                    color: Colors.white,
+                  )),
+            ],
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.w),
+            child: Text(
+              'مخزن قرارداد ها',
+              style: kMediumTextStyle.copyWith(
+                  color: Colors.white,
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.bold),
+            ),
+          )
+        ],
       ),
     );
   }
 }
+
+// class RatingBarBottomSheet extends StatelessWidget {
+//   const RatingBarBottomSheet({
+//     super.key,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
+//       height: MediaQuery.sizeOf(context).height * .35,
+//       decoration: const BoxDecoration(
+//           color: Colors.white,
+//           borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+//       alignment: Alignment.center,
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//         children: [
+//           RatingBar(
+//             initialRating: 5,
+//             minRating: 3,
+//             direction: Axis.horizontal,
+//             itemCount: 5,
+//             ratingWidget: RatingWidget(
+//               full: const Icon(
+//                 Icons.star_rounded,
+//                 color: kPrimaryColor,
+//               ),
+//               half: const Icon(
+//                 Icons.star_half_rounded,
+//                 color: kPrimaryColor,
+//               ),
+//               empty: const Icon(
+//                 Icons.star_outline_rounded,
+//                 color: kPrimaryColor,
+//               ),
+//             ),
+//             itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+//             onRatingUpdate: (rating) {
+//               print(rating);
+//             },
+//           ),
+//           Text(
+//             '!با ثبت 5 امتیاز از ما حمایت کنید',
+//             style: kMediumTextStyle.copyWith(color: Colors.black87),
+//           ),
+//           ElevatedButton(
+//               onPressed: () {},
+//               style: ElevatedButton.styleFrom(
+//                   shape: RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.circular(16)),
+//                   backgroundColor: kPrimaryColor),
+//               child: Text(
+//                 'ثبت امتیاز',
+//                 style: kMediumTextStyle,
+//               ))
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class BuildImage extends StatelessWidget {
   final String imageName;

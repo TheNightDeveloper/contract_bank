@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:adivery/adivery.dart';
+import 'package:contracts_bank/config/routes/routes.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
-
-import 'package:contract_bank/features/article/presentation/provider/skeleton_provider.dart';
-import 'package:contract_bank/features/article/presentation/widgets/skelet_widgets.dart';
+import 'package:contracts_bank/features/article/presentation/widgets/skelet_widgets.dart';
 
 class SkeletonScreen extends StatefulWidget {
   const SkeletonScreen({super.key});
@@ -14,6 +12,12 @@ class SkeletonScreen extends StatefulWidget {
 
 class _SkeletonScreenState extends State<SkeletonScreen> {
   bool canPop = false;
+  @override
+  void initState() {
+    super.initState();
+    AdiveryPlugin.prepareInterstitialAd(adsPlacementID);
+  }
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<SkeletProvider>(context);
@@ -46,7 +50,7 @@ class _SkeletonScreenState extends State<SkeletonScreen> {
                     Colors.transparent,
                     Colors.white
                   ],
-                  stops: [0.0, 0.0, .91, 1],
+                  stops: [0.0, 0.0, .97, 1],
                 ).createShader(bounds);
               },
               blendMode: BlendMode.dstOut,

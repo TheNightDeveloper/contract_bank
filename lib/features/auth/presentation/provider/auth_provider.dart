@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:contract_bank/core/params/user_params.dart';
-import 'package:contract_bank/core/utils/const.dart';
-import 'package:contract_bank/features/auth/domain/entities/user_entity.dart';
-import 'package:contract_bank/features/auth/domain/use_cases/login_usecase.dart';
-import 'package:contract_bank/features/auth/domain/use_cases/newpassword_usecase.dart';
-import 'package:contract_bank/features/auth/domain/use_cases/otp_usecase.dart';
-import 'package:contract_bank/features/auth/domain/use_cases/register_usecase.dart';
-import 'package:contract_bank/features/auth/domain/use_cases/verify_usecase.dart';
+import 'package:contracts_bank/core/params/auth_params.dart';
+import 'package:contracts_bank/core/utils/const.dart';
+import 'package:contracts_bank/features/auth/domain/entities/user_entity.dart';
+import 'package:contracts_bank/features/auth/domain/use_cases/login_usecase.dart';
+import 'package:contracts_bank/features/auth/domain/use_cases/newpassword_usecase.dart';
+import 'package:contracts_bank/features/auth/domain/use_cases/otp_usecase.dart';
+import 'package:contracts_bank/features/auth/domain/use_cases/register_usecase.dart';
+import 'package:contracts_bank/features/auth/domain/use_cases/verify_usecase.dart';
 
 import '../../../../core/errors/failure.dart';
 

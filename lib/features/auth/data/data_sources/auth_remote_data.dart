@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:contract_bank/config/routes/routes.dart';
-import 'package:contract_bank/core/errors/exceptions.dart';
-import '../../../../core/params/user_params.dart';
+import 'package:contracts_bank/config/routes/routes.dart';
+import 'package:contracts_bank/core/errors/exceptions.dart';
+import '../../../../core/params/auth_params.dart';
 import '../models/user_model.dart';
 
 abstract class AuthRemoteData {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:contract_bank/features/article/presentation/pages/subpage/detail_page.dart';
+import 'package:contracts_bank/features/article/presentation/pages/subpage/detail_page.dart';
 import '../../../../core/utils/const.dart';
 import '../provider/article_provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -58,6 +58,7 @@ class BuildSearchBox extends StatelessWidget {
                     ),
                     TextField(
                         keyboardType: TextInputType.text,
+                        autofocus: true,
                         controller: _controller,
                         onChanged: (key) async {
                           await Provider.of<ArticleProvider>(context,
@@ -68,10 +69,20 @@ class BuildSearchBox extends StatelessWidget {
                         style: kMediumTextStyle.copyWith(color: Colors.black54),
                         cursorColor: kPrimaryColor,
                         decoration: InputDecoration(
-                          border: InputBorder.none,
+                          // isCollapsed: true,
+                          isDense: true,
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide:
+                                  const BorderSide(color: Colors.white)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide:
+                                  const BorderSide(color: Colors.white)),
                           hintText: 'جستجو عنوان...',
                           hintTextDirection: TextDirection.rtl,
                           prefixIcon: Container(
+                            margin: EdgeInsets.only(left: 2.w),
                             decoration: BoxDecoration(
                                 color: kPrimaryColor,
                                 borderRadius: BorderRadius.circular(16)),
@@ -146,12 +157,10 @@ class BuildSearchList extends StatelessWidget {
                       provider.searchList![index].title,
                       textAlign: TextAlign.right,
                     ),
-                    leading: IconButton(
-                        onPressed: () async {},
-                        icon: const Icon(
-                          Icons.bookmark,
-                          color: kPrimaryColor,
-                        )),
+                    leading: Icon(
+                      Icons.article,
+                      color: kPrimaryColor,
+                    ),
                   ));
             },
             separatorBuilder: (BuildContext context, int index) => Divider(

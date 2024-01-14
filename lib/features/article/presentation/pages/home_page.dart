@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:contract_bank/core/utils/const.dart';
-import 'package:contract_bank/core/utils/contract_bank_icons.dart';
+import 'package:contracts_bank/core/utils/const.dart';
+import '../../../../core/utils/contract_bank_icons.dart';
 import '../../../../core/widgets/common_widgets.dart';
 import '../widgets/home_widgets.dart';
 

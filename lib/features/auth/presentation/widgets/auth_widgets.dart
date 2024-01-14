@@ -1,17 +1,21 @@
+import 'package:contracts_bank/core/utils/menu_content.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vibration/vibration.dart';
-import 'package:contract_bank/core/utils/const.dart';
+import 'package:contracts_bank/core/utils/const.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:timer_count_down/timer_count_down.dart';
-import 'package:contract_bank/config/routes/names.dart';
-import 'package:contract_bank/core/params/user_params.dart';
-import 'package:contract_bank/features/article/presentation/provider/article_provider.dart';
-import 'package:contract_bank/features/auth/presentation/provider/auth_provider.dart';
+import 'package:contracts_bank/config/routes/names.dart';
+import 'package:contracts_bank/core/params/auth_params.dart';
+import 'package:contracts_bank/features/article/presentation/provider/article_provider.dart';
+import 'package:contracts_bank/features/auth/presentation/provider/auth_provider.dart';
 
 class AuthPageView extends StatefulWidget {
   final BuildContext context;
@@ -66,6 +70,14 @@ class _AuthPageViewState extends State<AuthPageView> {
   bool timerEnd = false;
 
   final Curve curve = Curves.fastLinearToSlowEaseIn;
+
+  Future<void> _launchUrl(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +168,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          height = 320.h;
+                          height = 350.h;
                         });
                         _pageController.nextPage(
                             duration: const Duration(milliseconds: 1000),
@@ -213,7 +225,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                 physics: const NeverScrollableScrollPhysics(),
                 child: Padding(
                   padding:
-                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
+                      EdgeInsets.symmetric(vertical: 3.h, horizontal: 20.w),
                   child: Column(
                     children: [
                       Padding(
@@ -238,6 +250,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                           _BuildTextField(
                             hint: 'نام خود را وارد کنید',
                             controller: _firstnameController,
+                            focus: true,
                           ),
                           _BuildTextField(
                             hint: 'نام خانوادگی خود را وارد کنید',
@@ -302,6 +315,33 @@ class _AuthPageViewState extends State<AuthPageView> {
                           )),
                       SizedBox(
                         height: 6.h,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                            text: 'با ثبت نام و ادامه ',
+                            style: kMediumTextStyle.copyWith(fontSize: 13.sp),
+                            children: [
+                              TextSpan(
+                                  text: 'شرایط استفاده از خدمات و حریم خصوصی ',
+                                  style: kMediumTextStyle.copyWith(
+                                      decoration: TextDecoration.underline,
+                                      fontSize: 13.sp),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      var url = Uri.parse(
+                                          'https://pazhcc.com/privacy-contracts-bank-app');
+                                      _launchUrl(url);
+                                      // showModalBottomSheet(
+                                      //     context: context,
+                                      //     builder: (_) => const _TermsConfirmation());
+                                    }),
+                              const TextSpan(text: 'را می پذیرم.')
+                            ]),
+                        textAlign: TextAlign.center,
+                        textDirection: TextDirection.rtl,
+                      ),
+                      SizedBox(
+                        height: 5.h,
                       ),
                       InkWell(
                         onTap: () {
@@ -377,7 +417,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          height = 330.h;
+                          height = 350.h;
                         });
                         _pageController.animateToPage(1,
                             duration: const Duration(milliseconds: 1000),
@@ -423,6 +463,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                         // alignment: Alignment.bottomCenter,
                         child: BuildPasswordTextField(
                           hint: 'کلمه عبور خود را وارد کنید',
+                          focus: true,
                           controller: _loginPasswordController,
                         )),
                     SizedBox(
@@ -609,6 +650,104 @@ class _AuthPageViewState extends State<AuthPageView> {
   }
 }
 
+// class  _TermsConfirmation extends StatelessWidget {
+//   const _TermsConfirmation({
+//     super.key,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//           padding: EdgeInsets.symmetric(
+//               vertical: 10.h,
+//               horizontal: 15.w),
+//           height:
+//               MediaQuery.sizeOf(context)
+//                       .height *
+//                   1 /
+//                   2,
+//           width: double.infinity,
+//           decoration: const BoxDecoration(
+//               borderRadius:
+//                   BorderRadius.vertical(
+//                       top:
+//                           Radius.circular(
+//                               16)),
+//               color: Colors.white),
+//           child: Column(
+//             mainAxisAlignment:
+//                 MainAxisAlignment
+//                     .spaceBetween,
+//             children: [
+//               Text(
+//                 'شرایط استفاده از خدمات و حریم خصوصی',
+//                 style: kMediumTextStyle
+//                     .copyWith(
+//                         color: Colors
+//                             .black87,
+//                         fontSize: 20.sp,
+//                         fontWeight:
+//                             FontWeight
+//                                 .w800),
+//                 textDirection:
+//                     TextDirection.rtl,
+//                 textAlign:
+//                     TextAlign.center,
+//               ),
+//               SizedBox(
+//                 // margin:
+//                 //     EdgeInsets.symmetric(
+//                 //         vertical: 20.h),
+//                 height: MediaQuery.sizeOf(
+//                             context)
+//                         .height *
+//                     .33,
+//                 child:
+//                     SingleChildScrollView(
+//                   child: Text(
+//                     MenuContent.fourth[
+//                         'content'],
+//                     textDirection:
+//                         TextDirection.rtl,
+//                     style: kMediumTextStyle
+//                         .copyWith(
+//                             color: Colors
+//                                 .black87),
+//                   ),
+//                 ),
+//               ),
+//               Align(
+//                 alignment: Alignment
+//                     .bottomCenter,
+//                 child: ElevatedButton(
+//                     style: ElevatedButton.styleFrom(
+//                         backgroundColor:
+//                             kButtonColor,
+//                         fixedSize: Size(
+//                             270.w, 42.h),
+//                         shape: RoundedRectangleBorder(
+//                             borderRadius:
+//                                 BorderRadius
+//                                     .circular(
+//                                         8))),
+//                     onPressed: () {
+//                       Navigator.pop(
+//                           context);
+//                     },
+//                     child: Text('تایید',
+//                         style: kMediumTextStyle
+//                             .copyWith(
+//                                 color:
+//                                     kPrimaryColor,
+//                                 fontSize:
+//                                     19.sp))),
+//               )
+//             ],
+//           ),
+//         );
+//   }
+// }
+
 class _PhoneNumberInput extends StatelessWidget {
   const _PhoneNumberInput({
     required TextEditingController registerPhoneNumberController,
@@ -621,16 +760,16 @@ class _PhoneNumberInput extends StatelessWidget {
     return Row(
       children: [
         Container(
-          decoration: BoxDecoration(
-              color: kSecondColor, borderRadius: BorderRadius.circular(8)),
-          height: 42.h,
-          width: 45.w,
-          alignment: Alignment.center,
-          child: Text(
-            '+98',
-            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20.sp),
-          ),
-        ),
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
+            decoration: BoxDecoration(
+                color: kSecondColor, borderRadius: BorderRadius.circular(8)),
+            height: 42.h,
+            width: 45.w,
+            alignment: Alignment.center,
+            child: SvgPicture.asset(
+              'assets/svg/iran-flag-icon.svg',
+              fit: BoxFit.cover,
+            )),
         Container(
             margin: EdgeInsets.only(left: 10.w),
             // padding: EdgeInsets.all(11.w),
@@ -667,9 +806,13 @@ class _PhoneNumberInput extends StatelessWidget {
 
 class _BuildTextField extends StatelessWidget {
   final String title, hint;
+  final bool focus;
   final TextEditingController controller;
   const _BuildTextField(
-      {this.title = '', required this.hint, required this.controller});
+      {this.title = '',
+      required this.hint,
+      required this.controller,
+      this.focus = false});
 
   @override
   Widget build(BuildContext context) {
@@ -683,6 +826,7 @@ class _BuildTextField extends StatelessWidget {
         // alignment: Alignment.bottomCenter,
         child: TextField(
           controller: controller,
+          autofocus: focus,
           textDirection: TextDirection.rtl,
           textAlign: TextAlign.right,
           style: kMediumTextStyle.copyWith(color: Colors.black87),
@@ -700,12 +844,14 @@ class _BuildTextField extends StatelessWidget {
 
 class BuildPasswordTextField extends StatefulWidget {
   final String title, hint;
+  final bool focus;
   final TextEditingController controller;
   const BuildPasswordTextField(
       {super.key,
       this.title = '',
       required this.hint,
-      required this.controller});
+      required this.controller,
+      this.focus = false});
 
   @override
   State<BuildPasswordTextField> createState() => _BuildPasswordTextField();
@@ -725,6 +871,7 @@ class _BuildPasswordTextField extends State<BuildPasswordTextField> {
         // alignment: Alignment.bottomCenter,
         child: TextField(
           obscureText: visibility,
+          autofocus: widget.focus,
           controller: widget.controller,
           textDirection: TextDirection.rtl,
           textAlign: TextAlign.right,

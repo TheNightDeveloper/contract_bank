@@ -1,9 +1,9 @@
-name: contract_bank
+name: contracts_bank
 description: "Contract Bank Application."
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.1+1
+version: 1.0.1+103
 
 environment:
   sdk: '>=3.2.0 <4.0.0'
@@ -12,16 +12,15 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
   provider: ^6.1.1
   get_it: ^7.6.4
   dio: ^5.4.0
-  path_provider: ^2.1.1
   flutter_screenutil: ^5.9.0
   dartz: ^0.10.1
   json_annotation:
   equatable:
   retrofit:
+  share_plus: ^7.2.1
   flutter_native_splash: ^2.3.8
   shared_preferences:
   dots_indicator:
@@ -35,6 +34,7 @@ dependencies:
   url_launcher: 
   vibration: ^1.8.4
   timer_count_down: ^2.2.2
+  adivery: ^4.2.0 
 
  
 
@@ -64,7 +64,7 @@ flutter:
   assets:
      - assets/img/
      - assets/svg/
-     - assets/icons/
+    #  - assets/icons/
   #   - images/a_dot_ham.jpeg
 
   fonts:

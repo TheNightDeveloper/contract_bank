@@ -21,8 +21,7 @@ class _ArticleRemoteData implements ArticleRemoteData {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<List<ArticleModel>>> getArticle(
-      ) async {
+  Future<HttpResponse<List<ArticleModel>>> getArticle() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = HEADER_URL;
@@ -52,8 +51,7 @@ class _ArticleRemoteData implements ArticleRemoteData {
   }
 
   @override
-  Future<HttpResponse<List<int>>> getBookmark(
-      ) async {
+  Future<HttpResponse<List<int>>> getBookmark() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = HEADER_URL;
@@ -81,8 +79,7 @@ class _ArticleRemoteData implements ArticleRemoteData {
   }
 
   @override
-  Future<HttpResponse<dynamic>> postBookmark(
-      {int? id}) async {
+  Future<HttpResponse<dynamic>> postBookmark({int? id}) async {
     final _data = {"article": id};
     final _headers = HEADER_URL;
     final _result = await _dio.post('${baseUrl}articles/bookmark',
@@ -121,14 +118,12 @@ class _ArticleRemoteData implements ArticleRemoteData {
   }
 
   @override
-  Future<HttpResponse<dynamic>> deleteBookmark(
-      {String? id}) async {
+  Future<HttpResponse<dynamic>> deleteBookmark({String? id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = HEADER_URL;
     const _data = null;
-    print('${baseUrl}articles/bookmark_delete/$id/');
     final _result = await _dio.delete('${baseUrl}articles/bookmark_delete/$id/',
         options: Options(headers: _headers));
 
@@ -138,8 +133,7 @@ class _ArticleRemoteData implements ArticleRemoteData {
   }
 
   @override
-  Future<HttpResponse<List<ArticleModel>>> search(
-      {String? key}) async {
+  Future<HttpResponse<List<ArticleModel>>> search({String? key}) async {
     final _headers = HEADER_URL;
 
     final Map<String, dynamic>? _data = {'key': key};

@@ -1,14 +1,15 @@
+import 'package:contracts_bank/features/article/presentation/pages/subpage/devs_team_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../config/routes/routes.dart';
 import '../../../../core/utils/contract_bank_icons.dart';
+
 import '../../../../core/utils/menu_content.dart';
 import '../pages/subpage/content_page.dart';
 
 class BuildMenu extends StatelessWidget {
   const BuildMenu({super.key});
-
   Future<void> _launchUrl(Uri url) async {
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
@@ -32,9 +33,9 @@ class BuildMenu extends StatelessWidget {
                   children: [
                     Container(
                         margin: EdgeInsets.symmetric(
-                            horizontal: 0.w, vertical: 5.h),
+                            horizontal: 0.w, vertical: 3.h),
                         width: 155.w,
-                        height: 95.h,
+                        height: 85.h,
                         decoration: kGreyBoxDecoration,
                         child: InkWell(
                           onTap: () {
@@ -43,8 +44,13 @@ class BuildMenu extends StatelessWidget {
                                     ContentPage(content: MenuContent.first)));
                           },
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              const SizedBox(),
+                              Image.asset(
+                                'assets/img/${MenuContent.first['icon']}',
+                                scale: 1.8.r,
+                                color: kPrimaryColor,
+                              ),
                               Text(
                                 MenuContent.first['title'],
                                 style: kMediumTextStyle.copyWith(
@@ -56,10 +62,11 @@ class BuildMenu extends StatelessWidget {
                           ),
                         )),
                     Container(
+                      alignment: Alignment.center,
                       margin:
-                          EdgeInsets.symmetric(horizontal: 0.w, vertical: 5.h),
+                          EdgeInsets.symmetric(horizontal: 0.w, vertical: 3.h),
                       width: 155.w,
-                      height: 40.h,
+                      height: 35.h,
                       decoration: kGreyBoxDecoration,
                       child: InkWell(
                         onTap: () {
@@ -67,23 +74,18 @@ class BuildMenu extends StatelessWidget {
                               builder: (context) =>
                                   ContentPage(content: MenuContent.third)));
                         },
-                        child: Column(
-                          children: [
-                            const SizedBox(),
-                            Text(MenuContent.third['title'],
-                                style: kMediumTextStyle.copyWith(
-                                    color: kPrimaryColor,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w700)),
-                          ],
-                        ),
+                        child: Text(MenuContent.third['title'],
+                            style: kMediumTextStyle.copyWith(
+                                color: kPrimaryColor,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w700)),
                       ),
                     ),
                     Container(
                         margin: EdgeInsets.symmetric(
-                            horizontal: 0.w, vertical: 5.h),
+                            horizontal: 0.w, vertical: 3.h),
                         width: 155.w,
-                        height: 95.h,
+                        height: 85.h,
                         decoration: kGreyBoxDecoration,
                         child: InkWell(
                           onTap: () {
@@ -92,8 +94,13 @@ class BuildMenu extends StatelessWidget {
                                     ContentPage(content: MenuContent.fifth)));
                           },
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              const SizedBox(),
+                              Image.asset(
+                                'assets/img/${MenuContent.fifth['icon']}',
+                                scale: 1.8.r,
+                                color: kPrimaryColor,
+                              ),
                               Text(MenuContent.fifth['title'],
                                   style: kMediumTextStyle.copyWith(
                                       color: kPrimaryColor,
@@ -103,10 +110,11 @@ class BuildMenu extends StatelessWidget {
                           ),
                         )),
                     Container(
+                      alignment: Alignment.center,
                       margin:
-                          EdgeInsets.symmetric(horizontal: 0.w, vertical: 5.h),
+                          EdgeInsets.symmetric(horizontal: 0.w, vertical: 3.h),
                       width: 155.w,
-                      height: 40.h,
+                      height: 35.h,
                       decoration: kGreyBoxDecoration,
                       child: InkWell(
                         onTap: () {
@@ -114,21 +122,16 @@ class BuildMenu extends StatelessWidget {
                               builder: (context) =>
                                   ContentPage(content: MenuContent.seventh)));
                         },
-                        child: Column(
-                          children: [
-                            const SizedBox(),
-                            Text(MenuContent.seventh['title'],
-                                style: kMediumTextStyle.copyWith(
-                                    color: kPrimaryColor,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w700)),
-                          ],
-                        ),
+                        child: Text(MenuContent.seventh['title'],
+                            style: kMediumTextStyle.copyWith(
+                                color: kPrimaryColor,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w700)),
                       ),
                     ),
                     SizedBox(
                       width: 155.w,
-                      height: 55.h,
+                      height: 50.h,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,10 +184,11 @@ class BuildMenu extends StatelessWidget {
                 Column(
                   children: [
                     Container(
+                      alignment: Alignment.center,
                       margin:
-                          EdgeInsets.symmetric(horizontal: 0.w, vertical: 5.h),
+                          EdgeInsets.symmetric(horizontal: 0.w, vertical: 3.h),
                       width: 155.w,
-                      height: 40.h,
+                      height: 35.h,
                       decoration: kGreyBoxDecoration,
                       child: InkWell(
                         onTap: () {
@@ -192,23 +196,19 @@ class BuildMenu extends StatelessWidget {
                               builder: (context) =>
                                   ContentPage(content: MenuContent.second)));
                         },
-                        child: Column(
-                          children: [
-                            const SizedBox(),
-                            Text(MenuContent.second['title'],
-                                style: kMediumTextStyle.copyWith(
-                                    color: kPrimaryColor,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w700)),
-                          ],
-                        ),
+                        child: Text(MenuContent.second['title'],
+                            style: kMediumTextStyle.copyWith(
+                                color: kPrimaryColor,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w700)),
                       ),
                     ),
                     Container(
+                      alignment: Alignment.center,
                       margin:
-                          EdgeInsets.symmetric(horizontal: 0.w, vertical: 5.h),
+                          EdgeInsets.symmetric(horizontal: 0.w, vertical: 3.h),
                       width: 155.w,
-                      height: 40.h,
+                      height: 35.h,
                       decoration: kGreyBoxDecoration,
                       child: InkWell(
                         onTap: () {
@@ -216,23 +216,18 @@ class BuildMenu extends StatelessWidget {
                               builder: (context) =>
                                   ContentPage(content: MenuContent.fourth)));
                         },
-                        child: Column(
-                          children: [
-                            const SizedBox(),
-                            Text(MenuContent.fourth['title'],
-                                style: kMediumTextStyle.copyWith(
-                                    color: kPrimaryColor,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w700)),
-                          ],
-                        ),
+                        child: Text(MenuContent.fourth['title'],
+                            style: kMediumTextStyle.copyWith(
+                                color: kPrimaryColor,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w700)),
                       ),
                     ),
                     Container(
                       alignment: Alignment.center,
-                      margin: EdgeInsets.symmetric(vertical: 5.h),
+                      margin: EdgeInsets.symmetric(vertical: 3.h),
                       width: 155.w,
-                      height: 40.h,
+                      height: 35.h,
                       decoration: kGreyBoxDecoration,
                       child: InkWell(
                         onTap: () {
@@ -248,9 +243,9 @@ class BuildMenu extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5.h),
+                      margin: EdgeInsets.symmetric(vertical: 3.h),
                       width: 155.w,
-                      height: 95.h,
+                      height: 85.h,
                       decoration: kGreyBoxDecoration,
                       child: InkWell(
                         onTap: () {
@@ -259,8 +254,13 @@ class BuildMenu extends StatelessWidget {
                                   ContentPage(content: MenuContent.eighth)));
                         },
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const SizedBox(),
+                            Image.asset(
+                              'assets/img/${MenuContent.eighth['icon']}',
+                              scale: 1.8.r,
+                              color: kPrimaryColor,
+                            ),
                             Text(MenuContent.eighth['title'],
                                 style: kMediumTextStyle.copyWith(
                                     color: kPrimaryColor,
@@ -271,9 +271,9 @@ class BuildMenu extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5.h),
+                      margin: EdgeInsets.symmetric(vertical: 3.h),
                       width: 155.w,
-                      height: 95.h,
+                      height: 85.h,
                       decoration: kGreyBoxDecoration,
                       child: InkWell(
                         onTap: () {
@@ -282,8 +282,13 @@ class BuildMenu extends StatelessWidget {
                                   ContentPage(content: MenuContent.tenth)));
                         },
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const SizedBox(),
+                            Image.asset(
+                              'assets/img/${MenuContent.tenth['icon']}',
+                              scale: 1.8.r,
+                              color: kPrimaryColor,
+                            ),
                             Text(MenuContent.tenth['title'],
                                 style: kMediumTextStyle.copyWith(
                                     color: kPrimaryColor,
@@ -298,22 +303,23 @@ class BuildMenu extends StatelessWidget {
               ],
             ),
             Container(
-              height: 40.h,
+              height: 35.h,
               width: 330.w,
               alignment: Alignment.center,
               margin: EdgeInsets.only(bottom: 10.h),
               decoration: kGreyBoxDecoration,
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          ContentPage(content: MenuContent.devTeam)));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => DevsTeamPage()));
                 },
                 child: Text(
                   MenuContent.devTeam['title'],
-                  textScaler: const TextScaler.linear(1.1),
+                  // textScaler: const TextScaler.linear(1.1),
                   style: kMediumTextStyle.copyWith(
-                      color: kPrimaryColor, fontWeight: FontWeight.w700),
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15.sp),
                 ),
               ),
             )

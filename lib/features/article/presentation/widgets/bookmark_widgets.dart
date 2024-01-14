@@ -1,9 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
-import 'package:contract_bank/core/utils/const.dart';
-import 'package:contract_bank/features/article/presentation/pages/subpage/detail_page.dart';
-import 'package:contract_bank/features/article/presentation/provider/article_provider.dart';
+import 'package:contracts_bank/features/article/presentation/pages/subpage/detail_page.dart';
+import 'package:contracts_bank/features/article/presentation/provider/article_provider.dart';
 
 import '../../../../config/routes/routes.dart';
 

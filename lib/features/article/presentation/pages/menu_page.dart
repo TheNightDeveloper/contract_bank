@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:contract_bank/features/article/presentation/widgets/menu_widgets.dart';
+import 'package:contracts_bank/features/article/presentation/widgets/menu_widgets.dart';
 
 import '../../../../core/widgets/common_widgets.dart';
 
@@ -16,7 +16,7 @@ class _MenuPageState extends State<MenuPage> {
   Widget build(BuildContext context) {
     return CustomScrollView(
       shrinkWrap: true,
-      // physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       slivers: [
         const BuildAppbar(),
         SliverToBoxAdapter(

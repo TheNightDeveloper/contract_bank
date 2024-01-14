@@ -1,8 +1,9 @@
+import 'package:adivery/adivery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vibration/vibration.dart';
-import 'package:contract_bank/injector.dart';
+import 'package:contracts_bank/injector.dart';
 
 import '../services/shared_prefrences_service.dart';
 
@@ -12,6 +13,10 @@ final HEADER_URL = {
   'Content-Type': 'application/json',
   'Authorization': 'Bearer ${prefs.getString(storageDeviceAccessToken)}'
 };
+// const adsAppID = '59c36ce3-7125-40a7-bd34-144e6906c796';
+const adsAppID = '753e2629-52cd-4661-ad0a-0f841959253e';
+// const adsPlacementID = 'd3d19c2a-142c-4551-92f1-1d2c38aea3ec';
+const adsPlacementID = 'f0aefb8a-e300-4e4d-b4db-a99a5d98b421';
 late final SharedPreferencesService prefs;
 const storageDeviceIsLoggedIn = 'APP_FIRST_OPEN';
 const storageDeviceAccessToken = 'ACCESS_TOKEN';
@@ -48,9 +53,11 @@ final kGreyBoxDecoration = BoxDecoration(
 final kGreenBoxDecoration = BoxDecoration(
     color: kPrimaryColor, borderRadius: BorderRadius.circular(16));
 ////////  STATIC FUNCTIONS //////
+
 Future init() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  AdiveryPlugin.initialize(adsAppID);
   prefs = await SharedPreferencesService().init();
   injectionSetup();
 }

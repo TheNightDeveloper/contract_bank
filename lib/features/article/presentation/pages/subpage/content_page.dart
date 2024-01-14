@@ -41,7 +41,7 @@ class ContentPage extends StatelessWidget {
             ),
             SliverToBoxAdapter(
                 child: Container(
-              padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 60.h),
+              padding: EdgeInsets.fromLTRB(15.w, 10.h, 15.w, 60.h),
               child: Column(
                 children: [
                   Text(

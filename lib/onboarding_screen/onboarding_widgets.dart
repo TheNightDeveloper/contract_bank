@@ -1,7 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:contract_bank/config/routes/routes.dart';
+import 'package:contracts_bank/config/routes/routes.dart';
 
 class PageViewBuilder extends StatelessWidget {
   final String title, subtitle, imageName;

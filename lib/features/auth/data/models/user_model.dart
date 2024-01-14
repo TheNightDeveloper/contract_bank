@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:contract_bank/features/auth/domain/entities/user_entity.dart';
+import 'package:contracts_bank/features/auth/domain/entities/user_entity.dart';
 
 part 'user_model.g.dart';
 

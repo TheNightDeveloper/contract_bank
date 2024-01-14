@@ -2,12 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:contract_bank/core/errors/failure.dart';
-import 'package:contract_bank/core/services/data_state.dart';
-import 'package:contract_bank/features/article/domain/use_cases/delete_bookmark.dart';
-import 'package:contract_bank/features/article/domain/use_cases/get_bookmark.dart';
-import 'package:contract_bank/features/article/domain/use_cases/post_bookmark.dart';
-import 'package:contract_bank/features/article/domain/use_cases/search.dart';
+import 'package:contracts_bank/core/errors/failure.dart';
+import 'package:contracts_bank/core/services/data_state.dart';
+import 'package:contracts_bank/features/article/domain/use_cases/delete_bookmark.dart';
+import 'package:contracts_bank/features/article/domain/use_cases/get_bookmark.dart';
+import 'package:contracts_bank/features/article/domain/use_cases/post_bookmark.dart';
+import 'package:contracts_bank/features/article/domain/use_cases/search.dart';
 
 import '../../domain/entities/article_entity.dart';
 import '../../domain/use_cases/get_article.dart';
@@ -19,6 +19,7 @@ class ArticleProvider extends ChangeNotifier with EquatableMixin {
   DioException? exception;
   Failure? failure;
   bool isLoading = false;
+  int copied = 0;
 
 //// DEPENDENCIES ////
   final PostBookmarkUsecase _postBookmarkUsecase;
@@ -120,13 +121,18 @@ class ArticleProvider extends ChangeNotifier with EquatableMixin {
       // print('search success');
       // print(list);
       searchList = list;
-      isLoading = false;
       notifyListeners();
+      isLoading = false;
     });
   }
 
   void loading() {
     isLoading = true;
+    notifyListeners();
+  }
+
+  void copy(int num) {
+    copied = num;
     notifyListeners();
   }
 

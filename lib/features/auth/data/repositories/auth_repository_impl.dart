@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:contract_bank/core/errors/exceptions.dart';
-import 'package:contract_bank/core/errors/failure.dart';
+import 'package:contracts_bank/core/errors/exceptions.dart';
+import 'package:contracts_bank/core/errors/failure.dart';
 
-import 'package:contract_bank/core/params/user_params.dart';
-import 'package:contract_bank/features/auth/data/data_sources/auth_remote_data.dart';
-import 'package:contract_bank/features/auth/data/models/user_model.dart';
+import 'package:contracts_bank/core/params/auth_params.dart';
+import 'package:contracts_bank/features/auth/data/data_sources/auth_remote_data.dart';
+import 'package:contracts_bank/features/auth/data/models/user_model.dart';
 import '../../domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {

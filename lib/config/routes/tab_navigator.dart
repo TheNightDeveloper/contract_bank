@@ -1,11 +1,11 @@
 // import 'package:flutter/material.dart';
-// import 'package:contract_bank/features/article/presentation/pages/bookmark_page.dart';
-// import 'package:contract_bank/features/article/presentation/pages/contact.dart';
-// import 'package:contract_bank/features/article/presentation/pages/home_page.dart';
-// import 'package:contract_bank/features/article/presentation/pages/menu_page.dart';
-// import 'package:contract_bank/features/article/presentation/pages/search_page.dart';
-// import 'package:contract_bank/features/article/presentation/pages/subpage/contracts_page.dart';
-// import 'package:contract_bank/features/article/presentation/pages/subpage/detail_page.dart';
+// import 'package:contracts_bank/features/article/presentation/pages/bookmark_page.dart';
+// import 'package:contracts_bank/features/article/presentation/pages/contact.dart';
+// import 'package:contracts_bank/features/article/presentation/pages/home_page.dart';
+// import 'package:contracts_bank/features/article/presentation/pages/menu_page.dart';
+// import 'package:contracts_bank/features/article/presentation/pages/search_page.dart';
+// import 'package:contracts_bank/features/article/presentation/pages/subpage/contracts_page.dart';
+// import 'package:contracts_bank/features/article/presentation/pages/subpage/detail_page.dart';
 //
 // class TabNavigator extends StatelessWidget {
 //   final GlobalKey<NavigatorState> navigatorKey;

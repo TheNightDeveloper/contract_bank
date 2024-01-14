@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:dio/dio.dart' hide Headers;
-import 'package:contract_bank/config/routes/routes.dart';
-import 'package:contract_bank/core/utils/const.dart';
+import 'package:contracts_bank/config/routes/routes.dart';
+import 'package:contracts_bank/core/utils/const.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:contract_bank/features/article/data/models/article_model.dart';
+import 'package:contracts_bank/features/article/data/models/article_model.dart';
 
 part 'article_remote_data.g.dart';
 
