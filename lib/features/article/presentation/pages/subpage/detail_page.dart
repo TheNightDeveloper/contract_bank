@@ -94,45 +94,50 @@ class DetailPage extends StatelessWidget {
             // InterstitialAds.showInterstitial();
           }),
     ];
-    return Scaffold(
+    return SafeArea(
+      child: Scaffold(
         floatingActionButton: ExpandableFab(distance: 80.r, children: fabIcons),
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         backgroundColor: Colors.white,
-        body: SafeArea(
-          child: ShaderMask(
-            shaderCallback: (Rect bounds) {
-              return const LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.white,
-                  Colors.transparent,
-                  Colors.transparent,
-                  Colors.white
-                ],
-                stops: [0, 0.0, .95, 1],
-              ).createShader(bounds);
-            },
-            blendMode: BlendMode.dstOut,
-            child: CustomScrollView(
-              slivers: [
-                BuildDetailAppbar(
-                  title: article!.main_title,
-                ),
-                SliverToBoxAdapter(
-                    child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
-                  child: Text(
-                    article!.content,
-                    style: kMediumTextStyle.copyWith(color: Colors.black87),
-                    softWrap: true,
-                    textDirection: TextDirection.rtl,
-                  ),
-                ))
+        appBar: PreferredSize(
+            preferredSize: Size(double.infinity, 10.h),
+            child: SizedBox(
+              height: 10.h,
+            )),
+        body: ShaderMask(
+          shaderCallback: (Rect bounds) {
+            return const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.white,
+                Colors.transparent,
+                Colors.transparent,
+                Colors.white
               ],
-            ),
+              stops: [0, 0.0, .95, 1],
+            ).createShader(bounds);
+          },
+          blendMode: BlendMode.dstOut,
+          child: CustomScrollView(
+            slivers: [
+              BuildDetailAppbar(
+                title: article!.main_title,
+              ),
+              SliverToBoxAdapter(
+                  child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
+                child: Text(
+                  article!.content,
+                  style: kMediumTextStyle.copyWith(color: Colors.black87),
+                  softWrap: true,
+                  textDirection: TextDirection.rtl,
+                ),
+              ))
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

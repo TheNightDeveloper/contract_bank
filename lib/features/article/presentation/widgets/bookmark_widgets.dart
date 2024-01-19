@@ -27,7 +27,7 @@ class BuildBookmarkList extends StatelessWidget {
       } else {
         return SliverPadding(
           padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
-          sliver: SliverList.separated(
+          sliver: SliverList.builder(
             itemCount: provider.bookmarkArticle!.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
@@ -35,6 +35,7 @@ class BuildBookmarkList extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
                   child: ListTile(
+                    tileColor: kBackGroundColor,
                     onTap: () {
                       Navigator.push(
                           context,
@@ -61,13 +62,13 @@ class BuildBookmarkList extends StatelessWidget {
                         )),
                   ));
             },
-            separatorBuilder: (BuildContext context, int index) => Divider(
-              height: 10.h,
-              indent: 15.w,
-              endIndent: 15.w,
-              thickness: 1,
-              color: Colors.grey,
-            ),
+            // separatorBuilder: (BuildContext context, int index) => Divider(
+            //   height: 10.h,
+            //   indent: 15.w,
+            //   endIndent: 15.w,
+            //   thickness: 1,
+            //   color: Colors.grey,
+            // ),
           ),
         );
       }

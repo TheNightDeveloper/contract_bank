@@ -4,7 +4,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:contracts_bank/config/routes/routes.dart';
 import 'package:contracts_bank/core/params/auth_params.dart';
 import 'package:contracts_bank/features/article/presentation/provider/article_provider.dart';
-import 'package:contracts_bank/features/auth/presentation/provider/auth_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -118,7 +117,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       fontSize: 18.sp,
                       // fontWeight: FontWeight.w600,
                       decoration: TextDecoration.none)),
-              Text('v 1.0.1',
+              Text('v 1.0.2',
                   style: kMediumTextStyle.copyWith(
                       color: Colors.white,
                       fontSize: 12.sp,

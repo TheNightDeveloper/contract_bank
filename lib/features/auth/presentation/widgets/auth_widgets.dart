@@ -1,4 +1,3 @@
-import 'package:contracts_bank/core/utils/menu_content.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -222,7 +221,7 @@ class _AuthPageViewState extends State<AuthPageView> {
 
               /// REGISTER SCREEN
               SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
+                // physics: const NeverScrollableScrollPhysics(),
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(vertical: 3.h, horizontal: 20.w),
@@ -293,10 +292,27 @@ class _AuthPageViewState extends State<AuthPageView> {
                               var resault = await provider
                                   .eitherFailureOrRegister(registerParam);
                               if (resault) {
+                                bool sendCode = await provider.eitherOrOtp(
+                                    phoneNumber:
+                                        _registerPhoneNumberController.text,
+                                    otpType: 'register');
+                                if (sendCode) {
+                                  setState(() {
+                                    height = 270.h;
+                                    timerEnd = false;
+                                  });
+                                  _pageController.animateToPage(0,
+                                      duration:
+                                          const Duration(milliseconds: 1000),
+                                      curve: curve);
+                                }
+                              }
+                              if (provider.failure!.errorMessage ==
+                                  'این شماره در سیستم وجود دارد') {
                                 setState(() {
                                   height = 270.h;
                                 });
-                                _pageController.animateToPage(0,
+                                _pageController.animateToPage(2,
                                     duration:
                                         const Duration(milliseconds: 1000),
                                     curve: curve);
@@ -308,11 +324,16 @@ class _AuthPageViewState extends State<AuthPageView> {
                                       'مشخصات خود را بصورت کامل و صحیح وارد نمایید');
                             }
                           },
-                          child: Text(
-                            'تایید و ادامه',
-                            style:
-                                kMediumTextStyle.copyWith(color: kPrimaryColor),
-                          )),
+                          child: provider.isLoading
+                              ? const SpinKitThreeBounce(
+                                  color: kPrimaryColor,
+                                  size: 20,
+                                )
+                              : Text(
+                                  'تایید و ادامه',
+                                  style: kMediumTextStyle.copyWith(
+                                      color: kPrimaryColor),
+                                )),
                       SizedBox(
                         height: 6.h,
                       ),
@@ -383,6 +404,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                       height: 10.h,
                     ),
                     _PhoneNumberInput(
+                        focus: true,
                         registerPhoneNumberController:
                             _loginPhoneNumberController),
                     SizedBox(
@@ -483,6 +505,18 @@ class _AuthPageViewState extends State<AuthPageView> {
 
                             await provider.eitherFailureOrLogin(
                                 loginParams, context);
+                            if (provider.failure!.errorMessage ==
+                                'User Not active!') {
+                              bool sendCode = await provider.eitherOrOtp(
+                                  phoneNumber: _loginPhoneNumberController.text,
+                                  otpType: 'register');
+                              if (sendCode) {
+                                _pageController.animateToPage(5,
+                                    duration:
+                                        const Duration(milliseconds: 1000),
+                                    curve: curve);
+                              }
+                            }
                           } else {
                             Vibration.vibrate(duration: 100);
                             Fluttertoast.showToast(
@@ -642,6 +676,120 @@ class _AuthPageViewState extends State<AuthPageView> {
                   ],
                 ),
               ),
+
+              /// Verify
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.h),
+                      child: Text(
+                        'کد ارسالی را وارد کنید',
+                        style: kMediumTextStyle.copyWith(
+                            color: Colors.white,
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.bold),
+                        textDirection: TextDirection.rtl,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Pinput(
+                        controller: _otpRegisterController,
+                        autofocus: true,
+                        length: 5,
+                        defaultPinTheme: _pinputTheme),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: kButtonColor,
+                            fixedSize: Size(285.w, 42.h),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8))),
+                        onPressed: () async {
+                          if (_otpRegisterController.text.length < 5) {
+                            Vibration.vibrate(duration: 100);
+                            Fluttertoast.showToast(
+                                msg: 'کد را بصورت کامل وارد کنید');
+                          } else {
+                            await provider.eitherOrVerify([
+                              _otpRegisterController.text,
+                              _loginPhoneNumberController.text,
+                              _loginPasswordController.text
+                            ]);
+                          }
+                        },
+                        child: provider.isLoading
+                            ? const SpinKitThreeBounce(
+                                color: kPrimaryColor,
+                                size: 20,
+                              )
+                            : Text(
+                                'تایید',
+                                style: kMediumTextStyle.copyWith(
+                                    color: kPrimaryColor),
+                              )),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        // setState(() {
+                        //   height = 350.h;
+                        // });
+                        _pageController.animateToPage(2,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: curve);
+                      },
+                      child: Text('اصلاح شماره تماس ',
+                          style: kMediumTextStyle.copyWith(
+                              color: Colors.white,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.white)),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    !timerEnd
+                        ? Countdown(
+                            seconds: 120,
+                            interval: const Duration(seconds: 1),
+                            build: (_, time) => Text(time.toInt().toString(),
+                                style: kMediumTextStyle),
+                            onFinished: () {
+                              setState(() {
+                                timerEnd = true;
+                              });
+                            },
+                          )
+                        : InkWell(
+                            onTap: () async {
+                              await provider.eitherOrOtp(
+                                  otpType: 'register',
+                                  phoneNumber:
+                                      _registerPhoneNumberController.text);
+                              setState(() {
+                                timerEnd = false;
+                                // height = 320.h;
+                              });
+                              // _pageController.nextPage(
+                              //     duration: const Duration(
+                              //         milliseconds: 1000),
+                              //     curve: curve);
+                            },
+                            child: Text('ارسال مجدد',
+                                style: kMediumTextStyle.copyWith(
+                                    color: Colors.white,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Colors.white)),
+                          )
+                  ],
+                ),
+              ),
             ],
           ),
         );
@@ -751,9 +899,11 @@ class _AuthPageViewState extends State<AuthPageView> {
 class _PhoneNumberInput extends StatelessWidget {
   const _PhoneNumberInput({
     required TextEditingController registerPhoneNumberController,
+    this.focus,
   }) : _registerPhoneNumberController = registerPhoneNumberController;
 
   final TextEditingController _registerPhoneNumberController;
+  final bool? focus;
 
   @override
   Widget build(BuildContext context) {
@@ -778,10 +928,9 @@ class _PhoneNumberInput extends StatelessWidget {
             height: 42.h,
             width: 225.w,
             // alignment: Alignment.bottomCenter,
-            child: TextFormField(
+            child: TextField(
+              autofocus: focus ?? false,
               controller: _registerPhoneNumberController,
-              // autovalidateMode: AutovalidateMode.onUserInteraction,
-              // validator: (value) {},
               inputFormatters: [LengthLimitingTextInputFormatter(11)],
               textAlign: TextAlign.center,
               style: kMediumTextStyle.copyWith(

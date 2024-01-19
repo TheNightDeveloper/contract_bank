@@ -137,7 +137,7 @@ class BuildSearchList extends StatelessWidget {
       } else {
         return SliverPadding(
           padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
-          sliver: SliverList.separated(
+          sliver: SliverList.builder(
             itemCount: provider.searchList!.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
@@ -145,6 +145,7 @@ class BuildSearchList extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
                   child: ListTile(
+                    tileColor: kBackGroundColor,
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => DetailPage(
@@ -157,19 +158,19 @@ class BuildSearchList extends StatelessWidget {
                       provider.searchList![index].title,
                       textAlign: TextAlign.right,
                     ),
-                    leading: Icon(
+                    leading: const Icon(
                       Icons.article,
                       color: kPrimaryColor,
                     ),
                   ));
             },
-            separatorBuilder: (BuildContext context, int index) => Divider(
-              height: 10.h,
-              indent: 15.w,
-              endIndent: 15.w,
-              thickness: 1,
-              color: Colors.grey,
-            ),
+            // separatorBuilder: (BuildContext context, int index) => Divider(
+            //   height: 10.h,
+            //   indent: 15.w,
+            //   endIndent: 15.w,
+            //   thickness: 1,
+            //   color: Colors.grey,
+            // ),
           ),
         );
       }

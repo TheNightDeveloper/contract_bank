@@ -36,19 +36,20 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void loading() {
-    isLoading = !isLoading;
+  void loading(bool load) {
+    isLoading = load;
     notifyListeners();
   }
 
   Future<bool> eitherFailureOrLogin(
       LoginParams loginParams, BuildContext context) async {
-    loading();
+    loading(true);
     final failureOrUserEntity = await loginUsecase.call(loginParams);
     return failureOrUserEntity.fold((fail) {
       failure = fail;
       Fluttertoast.showToast(msg: fail.errorMessage);
-      loading();
+      loading(false);
+      notifyListeners();
 
       return false;
     }, (userr) {
@@ -58,20 +59,24 @@ class AuthProvider extends ChangeNotifier {
       prefs.setString(storageDevicePassword, loginParams.password);
       prefs.setBool(storageDeviceIsLoggedIn, true);
       isLoggedIn = true;
-      loading();
-      Fluttertoast.showToast(msg: 'موفق');
+      loading(false);
+      // Fluttertoast.showToast(msg: 'موفق');
       notifyListeners();
       return true;
     });
   }
 
   Future<bool> eitherFailureOrRegister(RegisterParams registerParams) async {
+    loading(true);
     final failureOrBool = await registerUsecase.call(registerParams);
     return failureOrBool.fold((fail) {
-      Fluttertoast.showToast(msg: 'خطا');
+      Fluttertoast.showToast(msg: fail.errorMessage);
+      failure = fail;
+      notifyListeners();
+      loading(false);
       return false;
     }, (bool) {
-      print(bool);
+      loading(false);
       if (bool) {
         return true;
       } else {
@@ -81,11 +86,11 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> eitherOrVerify(List list) async {
-    loading();
+    loading(true);
     final failureOrUserEntity = await verifyUsecase.call(list);
     failureOrUserEntity.fold((fail) {
-      Fluttertoast.showToast(msg: 'کد وارد شده اشتباه است');
-      loading();
+      Fluttertoast.showToast(msg: fail.errorMessage);
+      loading(false);
     }, (userr) {
       user = userr;
       prefs.setString(storageDeviceAccessToken, user!.access_token!);
@@ -93,21 +98,26 @@ class AuthProvider extends ChangeNotifier {
       prefs.setString(storageDevicePassword, list[2]);
       prefs.setBool(storageDeviceIsLoggedIn, true);
       isLoggedIn = true;
-      loading();
+      loading(false);
       Fluttertoast.showToast(msg: 'ثبت نام با موفقیت انجام شد');
       notifyListeners();
     });
   }
 
-  Future<void> eitherOrOtp(
+  Future<bool> eitherOrOtp(
       {required String phoneNumber, required String otpType}) async {
     Map<String, dynamic> data = {
       "phone_number": phoneNumber,
       "otp_type": otpType
     };
     final failureOrOtp = await otpUsecase.call(data);
-    failureOrOtp.fold((l) => Fluttertoast.showToast(msg: 'کاربر یافت نشد'),
-        (bool) => Fluttertoast.showToast(msg: 'کد جدید ارسال شد'));
+    return failureOrOtp.fold((l) {
+      Fluttertoast.showToast(msg: l.errorMessage);
+      return false;
+    }, (send) {
+      Fluttertoast.showToast(msg: 'کد ارسال شد');
+      return true;
+    });
   }
 
   Future<bool> eitherOrNewpassword(

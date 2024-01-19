@@ -17,9 +17,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final loginUser = await remoteData.login(loginParams);
       return Right(loginUser);
-    } on AuthException {
-      return Left(
-          AuthFailure(errorMessage: 'نام کاربری یا رمز عبور اشتباه است'));
+    } on AuthException catch (e) {
+      return Left(AuthFailure(errorMessage: e.msg!));
     }
   }
 
@@ -29,8 +28,8 @@ class AuthRepositoryImpl implements AuthRepository {
       final registerUser = await remoteData.register(registerParams);
       print(registerUser);
       return Right(registerUser);
-    } on AuthException {
-      return Left(AuthFailure(errorMessage: 'error while register'));
+    } on AuthException catch (e) {
+      return Left(AuthFailure(errorMessage: e.msg!));
     }
   }
 
@@ -39,8 +38,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final resault = await remoteData.verify(list);
       return Right(resault);
-    } on AuthException {
-      return Left(AuthFailure(errorMessage: 'error while verifying'));
+    } on AuthException catch(e){
+      return Left(AuthFailure(errorMessage: e.msg!));
     }
   }
 
@@ -60,8 +59,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final resault = await remoteData.sendCode(data);
       return Right(resault);
-    } on OtpException {
-      return Left(OtpFailure(errorMessage: ' otp sending fail'));
+    } on OtpException catch (e) {
+      return Left(OtpFailure(errorMessage: e.msg!));
     }
   }
 }

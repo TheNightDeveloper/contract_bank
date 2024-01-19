@@ -1,5 +1,6 @@
 import 'package:adivery/adivery.dart';
 import 'package:contracts_bank/config/routes/routes.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:contracts_bank/features/article/presentation/widgets/skelet_widgets.dart';
 
@@ -34,12 +35,17 @@ class _SkeletonScreenState extends State<SkeletonScreen> {
           });
         }
       },
-      child: Scaffold(
-        bottomNavigationBar: BottomNavBar(
-          context: context,
-        ),
-        body: SafeArea(
-          child: ShaderMask(
+      child: SafeArea(
+        child: Scaffold(
+          bottomNavigationBar: BottomNavBar(
+            context: context,
+          ),
+          appBar: PreferredSize(
+              preferredSize: Size(double.infinity, 10.h),
+              child: SizedBox(
+                height: 10.h,
+              )),
+          body: ShaderMask(
               shaderCallback: (Rect bounds) {
                 return const LinearGradient(
                   begin: Alignment.topCenter,
